@@ -7,16 +7,60 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Book Reviewer</h1>
+  <div class="container">
+    <h1>Book Reviewer</h1>
 
-  <form id="review-form">
-    <input type="text" id="user" placeholder="Your name" required>
-    <input type="text" id="book" placeholder="Book title" required>
-    <input type="number" id="rating" placeholder="Rating (1-10)" min="1" max="10" required>
-    <button type="submit" id="submit-btn">Add review</button>
-  </form>
+    <section class="box">
+      <h2>Full list</h2>
+      <ul id="review-list"></ul>
+    </section>
 
-  <ul id="review-list"></ul>
+    <div class="row">
+      <section class="box">
+        <h2>Add new review</h2>
+        <form id="review-form">
+          <input type="text" id="user" placeholder="Your name" required>
+          <input type="text" id="book" placeholder="Book title" required>
+          <input type="number" id="rating" placeholder="Rating (1-10)" min="1" max="10" required>
+          <button type="submit" id="submit-btn">Add review</button>
+        </form>
+      </section>
+
+      <section class="box">
+        <h2>Edit by id</h2>
+        <div class="field-group">
+          <input type="number" id="edit-id" placeholder="Review ID">
+          <input type="text" id="edit-user" placeholder="Your name">
+          <input type="text" id="edit-book" placeholder="Book title">
+          <input type="number" id="edit-rating" placeholder="Rating (1-10)" min="1" max="10">
+          <button type="button" id="edit-btn">Update review</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="row">
+      <section class="box">
+        <h2>Delete by id</h2>
+        <div class="field-group">
+          <input type="number" id="delete-id" placeholder="Review ID">
+          <button type="button" id="delete-btn">Delete review</button>
+        </div>
+      </section>
+
+      <section class="box">
+        <h2>Search specific user</h2>
+        <div class="field-group">
+          <input type="text" id="search-user" placeholder="Username">
+          <button type="button" id="search-btn">Search</button>
+        </div>
+      </section>
+    </div>
+
+    <section class="box">
+      <h2>User listed after search</h2>
+      <ul id="search-result-list"></ul>
+    </section>
+  </div>
 
   <script src="app.js"></script>
 </body>
