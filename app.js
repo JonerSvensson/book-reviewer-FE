@@ -9,6 +9,17 @@ const list = document.getElementById("review-list");
 const deleteIdField = document.getElementById("delete-id");
 const deleteBtn = document.getElementById("delete-btn");
 
+const editIdField = document.getElementById("edit-id");
+const editUserField = document.getElementById("edit-user");
+const editBookField = document.getElementById("edit-book");
+const editRatingField = document.getElementById("edit-rating");
+const editBtn = document.getElementById("edit-btn");
+
+const searchUserField = document.getElementById("search-user");
+const searchBtn = document.getElementById("search-btn");
+const searchResultList = document.getElementById("search-result-list");
+
+let allReviews = [];
 
 function setStatus(id, status, message) {
 	const el = document.getElementById(id);
@@ -36,6 +47,8 @@ async function loadReviews() {
 	setStatus("list-status", response.status, !response.ok ? extractMessage(data) : "");
 
 	if (!response.ok) return;
+
+	allReviews = data;
 
 	list.innerHTML = "";
 	data.forEach(review => {
@@ -88,6 +101,49 @@ deleteBtn.addEventListener("click", async () => {
 		deleteIdField.value = "";
 		loadReviews();
 	}
+});
+
+editBtn.addEventListener("click", async () => {
+	const id = editIdField.value;
+	if (!id) return;
+
+	const updatedReview = {
+		user: editUserField.value,
+		book: editBookField.value,
+		rating: Number(editRatingField.value)
+	};
+
+	const response = await fetch(`${API_URL}/${id}`, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(updatedReview)
+	});
+	const data = await response.json().catch(() => null);
+
+	setStatus("edit-status", response.status, !response.ok ? extractMessage(data) : "");
+
+	if (response.ok) {
+		editIdField.value = "";
+		editUserField.value = "";
+		editBookField.value = "";
+		editRatingField.value = "";
+		loadReviews();
+	}
+});
+
+searchBtn.addEventListener("click", () => {
+	const query = searchUserField.value.trim().toLowerCase();
+
+	searchResultList.innerHTML = "";
+	if (!query) return;
+
+	const matches = allReviews.filter(review => review.user.toLowerCase().includes(query));
+
+	matches.forEach(review => {
+		const li = document.createElement("li");
+		li.textContent = `#${review.id} — ${review.book} by ${review.user} — ${review.rating}/10`;
+		searchResultList.appendChild(li);
+	});
 });
 
 loadReviews();
