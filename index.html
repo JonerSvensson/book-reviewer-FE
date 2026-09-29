@@ -11,13 +11,13 @@
     <h1>Book Reviewer</h1>
 
     <section class="box">
-      <h2>Full list</h2>
+      <h2>Full list <span class="status-badge" id="list-status"></span></h2>
       <ul id="review-list"></ul>
     </section>
 
     <div class="row">
       <section class="box">
-        <h2>Add new review</h2>
+        <h2>Add new review<span class="status-badge" id="add-status"></span></h2>
         <form id="review-form">
           <input type="text" id="user" placeholder="Your name" required>
           <input type="text" id="book" placeholder="Book title" required>
@@ -27,7 +27,7 @@
       </section>
 
       <section class="box">
-        <h2>Edit by id</h2>
+        <h2>Edit by id <span class="status-badge" id="edit-status"></span></h2>
         <div class="field-group">
           <input type="number" id="edit-id" placeholder="Review ID">
           <input type="text" id="edit-user" placeholder="Your name">
@@ -40,7 +40,7 @@
 
     <div class="row">
       <section class="box">
-        <h2>Delete by id</h2>
+        <h2>Delete by id<span class="status-badge" id="delete-status"></span></h2>
         <div class="field-group">
           <input type="number" id="delete-id" placeholder="Review ID">
           <button type="button" id="delete-btn">Delete review</button>
@@ -48,7 +48,7 @@
       </section>
 
       <section class="box">
-        <h2>Search specific user</h2>
+        <h2>Search specific user<span class="status-badge" id="search-status"></span></h2>
         <div class="field-group">
           <input type="text" id="search-user" placeholder="Username">
           <button type="button" id="search-btn">Search</button>
