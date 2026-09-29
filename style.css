@@ -16,6 +16,25 @@ h1 {
 	color: #f5f5f5;
 }
 
+.status-badge {
+	display: inline-block;
+	margin-left: 8px;
+	padding: 2px 6px;
+	border: 1px solid #555;
+	border-radius: 4px;
+	font-family: monospace;
+	font-size: 0.8rem;
+	font-weight: normal;
+}
+
+.status-badge:empty {
+	display: none;
+}
+
+.status-badge[title] {
+	cursor: help;
+}
+
 .box {
 	border: 2px solid #444;
 	border-radius: 4px;
@@ -67,6 +86,8 @@ button {
 button:hover {
 	background: #3d3d3d;
 }
+
+
 
 #review-list li,
 #search-result-list li {
