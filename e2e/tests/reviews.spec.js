@@ -21,7 +21,7 @@ test("edit existing review", async ({ page }) => {
 	await page.fill("#edit-rating", "9");
 	await page.click("#edit-btn");
 
-	const newReview = page.locator("#review-list li", { hasText: "E2E Testing Edit" });
-	await expect(newReview).toBeVisible();
+	const editedReview = page.locator("#review-list li", { hasText: "E2E Testing Edit" });
+	await expect(editedReview).toBeVisible();
 
 });
