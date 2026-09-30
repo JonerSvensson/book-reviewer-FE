@@ -53,7 +53,7 @@ async function loadReviews() {
 	list.innerHTML = "";
 	data.forEach(review => {
 		const li = document.createElement("li");
-		li.textContent = `#${review.id} — ${review.book} by ${review.user} — ${review.rating}/10`;
+		li.textContent = `#${review.id} - ${review.user} | ${review.book} — ${review.rating}/10`;
 		list.appendChild(li);
 	});
 }
