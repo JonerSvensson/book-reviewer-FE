@@ -1,6 +1,26 @@
 const { test, expect } = require("@playwright/test");
 
-test("new review appears in the full list after being added", async ({ page }) => {
+test("backend API responds before running tests", async () => {
+	await expect
+		.poll(
+			async () => {
+				try {
+					const response = await fetch("https://book-reviewer-dev.onrender.com/api/reviews");
+					return response.status;
+				} catch {
+					return null;
+				}
+			},
+			{
+				message: "waiting for backend",
+				timeout: 60000,
+				intervals: [2000],
+			}
+		)
+		.toBe(200);
+});
+
+test("review appears in full list after being added", async ({ page }) => {
 	await page.goto("/");
 
 	await page.fill("#user", "Playwright Test");
@@ -12,7 +32,7 @@ test("new review appears in the full list after being added", async ({ page }) =
 	await expect(newReview).toBeVisible();
 });
 
-test("edit existing review", async ({ page }) => {
+test("edit review", async ({ page }) => {
 	await page.goto("/");
 
 	await page.fill("#edit-id", "1");
@@ -23,5 +43,24 @@ test("edit existing review", async ({ page }) => {
 
 	const editedReview = page.locator("#review-list li", { hasText: "E2E Testing Edit" });
 	await expect(editedReview).toBeVisible();
+});
 
+test("delete review", async ({ page }) => {
+	await page.goto("/");
+
+	await page.fill("#user", "Playwright delete Test");
+	await page.fill("#book", "E2E Delete Test");
+	await page.fill("#rating", "5");
+	await page.click("#submit-btn");
+
+	const newReview = page.locator("#review-list li", { hasText: "E2E Delete Test" });
+	await expect(newReview).toBeVisible();
+
+	const reviewText = await newReview.textContent();
+	const id = reviewText.match(/#(\d+)/)[1];
+
+	await page.fill("#delete-id", id);
+	await page.click("#delete-btn");
+
+	await expect(newReview).not.toBeVisible();
 });
