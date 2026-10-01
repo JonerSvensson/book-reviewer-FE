@@ -71,4 +71,5 @@ test("delete review", async ({ page }) => {
 	await page.click("#delete-btn");
 
 	await expect(newReview).not.toBeVisible();
+	
 });
