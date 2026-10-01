@@ -1,11 +1,13 @@
 const { test, expect } = require("@playwright/test");
 
+const API_URL = process.env.API_URL || "https://book-reviewer-dev.onrender.com/api/reviews";
+
 test("backend API responds before running tests", async () => {
 	await expect
 		.poll(
 			async () => {
 				try {
-					const response = await fetch("https://book-reviewer-dev.onrender.com/api/reviews");
+					const response = await fetch(API_URL);
 					return response.status;
 				} catch {
 					return null;
