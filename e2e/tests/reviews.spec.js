@@ -43,7 +43,18 @@ test("review appears in full list after being added", async ({ page }) => {
 test("edit review", async ({ page }) => {
 	await page.goto("/");
 
-	await page.fill("#edit-id", "1");
+	await page.fill("#user", "Playwright Test");
+	await page.fill("#book", "E2E Editing Base");
+	await page.fill("#rating", "5");
+	await page.click("#submit-btn");
+
+	const newReview = page.locator("#review-list li", { hasText: "E2E Editing Base" }).last();
+	await expect(newReview).toBeVisible();
+
+	const reviewText = await newReview.textContent();
+	const id = reviewText.match(/#(\d+)/)[1];
+
+	await page.fill("#edit-id", id);
 	await page.fill("#edit-user", "Playwright Edit Test");
 	await page.fill("#edit-book", "E2E Testing Edit");
 	await page.fill("#edit-rating", "9");
@@ -51,6 +62,9 @@ test("edit review", async ({ page }) => {
 
 	const editedReview = page.locator("#review-list li", { hasText: "E2E Testing Edit" });
 	await expect(editedReview).toBeVisible();
+
+	await page.fill("#delete-id", id);
+	await page.click("#delete-btn");
 });
 
 test("delete review", async ({ page }) => {
@@ -71,4 +85,5 @@ test("delete review", async ({ page }) => {
 	await page.click("#delete-btn");
 
 	await expect(newReview).not.toBeVisible();
+
 });
