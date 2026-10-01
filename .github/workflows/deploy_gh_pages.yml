@@ -15,6 +15,9 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v7
 
+            - name: Connect frontend to main backend
+              run: sed -i 's|https://book-reviewer-dev.onrender.com|https://book-reviewer-main.onrender.com|' app.js
+
             - name: Upload files
               uses: actions/upload-pages-artifact@v5
               with:
