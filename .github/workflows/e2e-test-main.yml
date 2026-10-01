@@ -3,10 +3,14 @@ name: E2E Test main
 on:
     push:
         branches: ["main"]
+    pull_request:
+        branches: ["main"]
 
 jobs:
     e2e:
         runs-on: ubuntu-latest
+        env:
+            API_URL: https://book-reviewer-main.onrender.com/api/reviews
 
         defaults:
             run:
@@ -30,7 +34,7 @@ jobs:
             - name: Wake up backend
               run: |
                   for i in {1..10}; do
-                      status=$(curl -s -o /dev/null -w "%{http_code}" https://book-reviewer-main.onrender.com/api/reviews)
+                      status=$(curl -s -o /dev/null -w "%{http_code}" "$API_URL")
                       if [ "$status" = "200" ]; then
                           echo "Backend is awake"
                           exit 0
