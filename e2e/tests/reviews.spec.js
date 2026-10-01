@@ -30,8 +30,14 @@ test("review appears in full list after being added", async ({ page }) => {
 	await page.fill("#rating", "7");
 	await page.click("#submit-btn");
 
-	const newReview = page.locator("#review-list li", { hasText: "E2E Testing 101" });
+	const newReview = page.locator("#review-list li", { hasText: "E2E Testing 101" }).last();
 	await expect(newReview).toBeVisible();
+
+	const reviewText = await newReview.textContent();
+	const id = reviewText.match(/#(\d+)/)[1];
+
+	await page.fill("#delete-id", id);
+	await page.click("#delete-btn");
 });
 
 test("edit review", async ({ page }) => {
